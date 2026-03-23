@@ -36,14 +36,14 @@ empresa-exemplo-second-brain/
 │   │   ├── TOOLS.md                   ← Ferramentas conectadas
 │   │   └── memory/
 │   │       └── channels.md            ← Mapeamento tópicos ↔ áreas
-│   ├── vendas/                        ← Agente especialista em vendas
-│   │   ├── SOUL.md                    ← Persona: Marcos Viana
+│   ├── vendas/                        ← Agente de Vendas
+│   │   ├── SOUL.md                    ← Mentes: Hormozi, Belfort, Ziglar
 │   │   └── AGENTS.md                 ← Escopo: empresa/ + vendas/ + dados/
-│   ├── marketing/                     ← Agente especialista em marketing
-│   │   ├── SOUL.md                    ← Persona: Beatriz Almeida
+│   ├── marketing/                     ← Agente de Marketing
+│   │   ├── SOUL.md                    ← Mentes: Brunson, Hormozi, Halbert
 │   │   └── AGENTS.md                 ← Escopo: empresa/ + marketing/
-│   └── atendimento/                   ← Agente especialista em atendimento
-│       ├── SOUL.md                    ← Persona: Clara Souza
+│   └── atendimento/                   ← Agente de Atendimento
+│       ├── SOUL.md                    ← Mentes: Hsieh (Zappos), Hyken
 │       └── AGENTS.md                 ← Escopo: empresa/ + atendimento/
 │
 ├── empresa/                           ← Contexto geral (cross-area)
@@ -146,23 +146,25 @@ Toda **área** sempre tem 3 pastas base:
 
 ## Agentes
 
-| Agente | Persona | Área | Tópico Telegram |
-|--------|---------|------|-----------------|
-| Assistente Geral | Generalista | Todas | General + todos |
-| Marcos Viana | Vendas consultivas (12 anos exp.) | Vendas | 💰 Vendas |
-| Beatriz Almeida | Marketing digital / performance | Marketing | 📢 Marketing |
-| Clara Souza | Customer success / suporte | Atendimento | 🎧 Atendimento |
+| Agente | Mentes de Referência | Área | Tópico Telegram |
+|--------|---------------------|------|-----------------|
+| Agente Geral | Generalista | Todas | General + todos |
+| Agente de Vendas | Hormozi, Belfort, Ziglar | Vendas | 💰 Vendas |
+| Agente de Marketing | Brunson, Hormozi, Halbert, Schwartz | Marketing | 📢 Marketing |
+| Agente de Atendimento | Hsieh (Zappos), Hyken, Disney | Atendimento | 🎧 Atendimento |
 
-Ver permissionamento completo em `seguranca/permissoes.md`.
+Cada agente tem nome funcional ("Agente de Vendas") + mentes de especialistas no SOUL.md que moldam como ele raciocina. Ver `agentes/[área]/SOUL.md` para detalhes.
+
+Ver permissionamento completo (pessoas + agentes + cenários) em `seguranca/permissoes.md`.
 
 ## Áreas Ativas
 
 | Área | Responsável | Agente | Skills ativas |
 |------|-------------|--------|---------------|
-| Vendas | André / Juliana | Marcos Viana | `relatorio-vendas`, `follow-up-leads` |
-| Marketing | Camila, Lucas/Patrícia | Beatriz Almeida | (em implementação) |
-| Atendimento | Juliana | Clara Souza | (em implementação) |
-| Operações | André Costa | Assistente Geral | (cross-area em `empresa/skills/`) |
+| Vendas | André / Juliana | Agente de Vendas | `relatorio-vendas`, `follow-up-leads` |
+| Marketing | Camila, Lucas/Patrícia | Agente de Marketing | (em implementação) |
+| Atendimento | Juliana | Agente de Atendimento | (em implementação) |
+| Operações | André Costa | Agente Geral | (cross-area em `empresa/skills/`) |
 
 ---
 

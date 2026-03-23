@@ -85,12 +85,12 @@ O sistema tem duas camadas de permissão:
 
 ### Qual agente acessa o quê
 
-| Agente | Persona | Acesso ao cérebro | Tópico Telegram | topic_id |
-|--------|---------|-------------------|-----------------|----------|
-| Assistente Geral | Generalista | `empresa/` + todas as `areas/` + `dados/` + `seguranca/` | General + qualquer tópico | 1 |
-| Marcos Viana | Vendas consultivas | `empresa/` + `areas/vendas/` + `dados/vendas.csv` + `dados/leads.csv` | 💰 Vendas | 4 |
-| Beatriz Almeida | Marketing digital | `empresa/` + `areas/marketing/` | 📢 Marketing | 3 |
-| Clara Souza | Customer success | `empresa/` + `areas/atendimento/` | 🎧 Atendimento | 5 |
+| Agente | Mentes de referência | Acesso ao cérebro |
+|--------|---------------------|-------------------|
+| Agente Geral | Generalista | `empresa/` + todas as `areas/` + `dados/` + `seguranca/` |
+| Agente de Vendas | Hormozi, Belfort, Ziglar | `empresa/` + `areas/vendas/` + `dados/vendas.csv` + `dados/leads.csv` |
+| Agente de Marketing | Brunson, Hormozi, Halbert, Schwartz | `empresa/` + `areas/marketing/` |
+| Agente de Atendimento | Hsieh (Zappos), Hyken, Disney | `empresa/` + `areas/atendimento/` |
 
 ### Por que o Assistente Geral tem acesso total?
 
@@ -118,7 +118,7 @@ Se um agente de área precisa de informação de outra área, ele pede ao Assist
 
 ## Matriz Completa: Pessoa × Agente × Área
 
-| Pessoa | Agente Geral | Marcos (Vendas) | Beatriz (Mkt) | Clara (Atend.) |
+| Pessoa | Agente Geral | Ag. Vendas | Ag. Marketing | Ag. Atendimento |
 |--------|:---:|:---:|:---:|:---:|
 | Ricardo (Fundador) | ✅ | ✅ | ✅ | ✅ |
 | Felipe (CEO) | ✅ | ✅ | ✅ | ✅ |
@@ -127,6 +127,71 @@ Se um agente de área precisa de informação de outra área, ele pede ao Assist
 | Juliana (Suporte) | ✅ | ✅ | ❌ | ✅ |
 | Lucas (Tráfego) | ❌ | ❌ | ✅ | ❌ |
 | Marcos (Design) | ❌ | ❌ | ✅ | ❌ |
+
+---
+
+## Mapeamento de Agentes — Tópicos ou Grupos
+
+Existem dois cenários para mapear agentes no Telegram. Escolha o que faz sentido pra sua empresa:
+
+### Cenário A: Um grupo com tópicos (fórum)
+
+Ideal para equipes pequenas (3-10 pessoas). Um único grupo, cada área é um tópico.
+
+```
+Grupo: Empresa Exemplo HQ
+├── General              → Agente Geral
+├── 💰 Vendas            → Agente de Vendas
+├── 📢 Marketing         → Agente de Marketing
+├── 🎧 Atendimento       → Agente de Atendimento
+├── ⚙️ Operações         → Agente Geral
+└── 🤖 Debug             → (testes e comandos)
+```
+
+| Agente | Tópico | topic_id | Quem fala ali |
+|--------|--------|----------|---------------|
+| Agente Geral | General | 1 | Liderança, qualquer um |
+| Agente de Vendas | 💰 Vendas | 4 | Juliana, André, liderança |
+| Agente de Marketing | 📢 Marketing | 3 | Camila, Lucas, liderança |
+| Agente de Atendimento | 🎧 Atendimento | 5 | Juliana, André, liderança |
+| Agente Geral | ⚙️ Operações | 6 | André, liderança |
+
+**Vantagem:** tudo num lugar só, fácil de gerenciar.
+**Desvantagem:** qualquer pessoa do grupo pode ver todos os tópicos (permissão é por agente, não por visualização).
+
+### Cenário B: Grupos separados por área
+
+Ideal para equipes maiores (10+ pessoas) ou quando a separação de dados é crítica.
+
+```
+Grupo: Vendas           → Agente de Vendas
+Grupo: Marketing         → Agente de Marketing
+Grupo: Atendimento       → Agente de Atendimento
+Grupo: Liderança         → Agente Geral
+```
+
+| Agente | Grupo | Quem participa |
+|--------|-------|----------------|
+| Agente de Vendas | Vendas | Juliana, André, Felipe, Ricardo |
+| Agente de Marketing | Marketing | Camila, Lucas, Patrícia, Marcos, Ricardo |
+| Agente de Atendimento | Atendimento | Juliana, André, Ricardo |
+| Agente Geral | Liderança | Ricardo, Felipe, André |
+
+**Vantagem:** separação real — quem não está no grupo, não vê nada. Mais seguro.
+**Desvantagem:** mais grupos pra gerenciar, mais agentes pra configurar.
+
+### Qual escolher?
+
+| Critério | Cenário A (tópicos) | Cenário B (grupos) |
+|----------|:---:|:---:|
+| Equipe pequena (< 10) | ✅ | ➖ |
+| Equipe grande (10+) | ➖ | ✅ |
+| Dados sensíveis por área | ➖ | ✅ |
+| Simplicidade de setup | ✅ | ➖ |
+| Separação real de acesso | ❌ | ✅ |
+| Custo (agentes rodando) | ✅ Menor | ❌ Maior |
+
+> 💡 **Recomendação:** comece com Cenário A (tópicos). Quando a equipe crescer ou dados sensíveis justificarem, migre para Cenário B.
 
 ---
 
