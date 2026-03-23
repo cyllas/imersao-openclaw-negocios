@@ -1,214 +1,521 @@
-# Use Cases Reais — Um Por Área
+# Deep Dives — Imersão OpenClaw nos Negócios
 
-> 5 cenários concretos, cada um com: problema → solução → implementação → resultado esperado.
-
----
-
-## Use Case 1: Vendas — "Nenhum lead esfria"
-
-### O problema
-O dono da empresa abre a planilha de leads uma vez por semana. Descobre que 8 leads pediram proposta e ninguém respondeu em 5 dias. Oportunidade de R$ 15K perdida.
-
-### A solução
-Agente de vendas roda cron diário às 9h. Varre a planilha de leads e alerta:
-
-```
-🔔 Follow-up necessário — 3 leads frios
-
-🔴 URGENTE (sem contato há 5+ dias):
-1. João — Mentoria (R$ 2.997) — último contato 18/03
-   → Ligar hoje. Pediu proposta e sumiu.
-
-🟡 ATENÇÃO (sem contato há 3 dias):
-2. Maria — Curso (R$ 197) — último contato 20/03
-   → WhatsApp com link de checkout
-
-📊 Pipeline: 30 leads ativos, R$ 47K em potencial
-```
-
-### Como implementar
-1. Planilha de leads em `dados/leads.csv` (nome, produto, valor, status, último contato)
-2. Skill `follow-up-leads` que lê o CSV e calcula dias sem contato
-3. Cron diário 9h BRT → entrega no tópico/grupo de Vendas
-
-### Resultado esperado
-- Tempo de resposta a leads: de 5 dias → menos de 48h
-- Conversão de leads quentes: +30-40%
-- Zero leads "esquecidos" no pipeline
+> 2 deep dives com profundidade real. Não são exemplos genéricos — são sistemas operacionais completos.
 
 ---
 
-## Use Case 2: Marketing — "Budget protegido"
+## Deep Dive 1: Marketing — Sistema de Criativos com IA
 
-### O problema
-A empresa gasta R$ 5K/mês em Meta Ads. Ninguém olha o dashboard todo dia. Uma campanha com ROAS 0.6 rodou 8 dias antes de alguém perceber. R$ 1.200 jogados fora.
+### O panorama
 
-### A solução
-Agente de marketing gera relatório semanal (segunda 8h) e alerta instantâneo se ROAS < 1.0 por 3 dias:
+A maioria dos negócios gerencia criativos de ads assim: sobe anúncio, olha o dashboard de vez em quando, pausa o que tá ruim quando lembra, e cria novos criativos "na intuição". Não documenta o que funcionou, não registra por que funcionou, e repete os mesmos erros toda rodada.
+
+O que a gente vai mostrar é um **sistema completo**: o agente documenta cada criativo, testa hipóteses de forma estruturada, monitora performance automaticamente, e quando chega a hora de criar novos criativos, ele já sabe exatamente o que funcionou e o que não funcionou.
+
+### O ciclo
 
 ```
-📢 Performance Semanal — Tráfego Pago (17-23/03)
-
-💰 Investimento: R$ 1.250
-🎯 Vendas: R$ 4.100 (ROAS 3.28)
-📊 CPA médio: R$ 38
-
-⚠️ ALERTA: Campanha "Retargeting geral" — ROAS 0.8 há 4 dias
-→ Recomendação: pausar imediatamente, economiza R$ 45/dia
-
-Top criativo: "5 ferramentas de IA" (Stories) — ROAS 4.2
-→ Recomendação: escalar +30% de budget
+HIPÓTESE → CRIATIVO → TESTE → DADO → CONCLUSÃO → NOVA HIPÓTESE
+    ↑                                                    │
+    └────────────────────────────────────────────────────┘
 ```
 
-### Como implementar
-1. Conectar Meta Ads API (token + account ID)
-2. Skill `relatorio-campanha` que puxa dados da API
-3. Cron semanal (segunda 8h) + alerta instantâneo se ROAS < 1.0
+O agente opera **em todas as etapas**, mas o humano decide em duas: qual hipótese testar e aprovar criativos antes do upload.
 
-### Resultado esperado
-- Zero dias de campanha ruim rodando sem perceber
-- Economia de 15-20% do budget (pausando o que não funciona)
-- Decisões de escalar baseadas em dados, não intuição
+### A estrutura no cérebro
+
+```
+areas/marketing/sub-areas/trafego-pago/
+├── contexto/geral.md          ← KPIs, ferramentas, responsáveis
+├── MAPA.md                    ← Tabela completa: nome interno ↔ nome no Meta Ads ↔ arquivo
+├── produtos/
+│   └── curso-marketing/
+│       ├── PROCESSO.md        ← O DOCUMENTO CENTRAL — conecta todas as peças
+│       ├── angulos/           ← Catálogo de ângulos de comunicação
+│       │   ├── delegacao.md   ← "Delega tudo pra IA, foca no estratégico"
+│       │   ├── resultado-rapido.md
+│       │   ├── nao-tecnico.md
+│       │   └── prova-social.md
+│       ├── formatos/          ← Catálogo de formatos visuais
+│       │   ├── screen-recording.md
+│       │   ├── talking-head.md
+│       │   ├── testimonial-editorial.md
+│       │   └── tweet-screenshot.md
+│       ├── descriptions/      ← Documentação de CADA criativo
+│       │   ├── c1.md          ← Copy, hook, ângulo, formato, arquivo
+│       │   ├── c2.md
+│       │   └── ... (50+ criativos documentados)
+│       ├── banners/           ← Arquivos visuais dos criativos
+│       │   ├── story/
+│       │   └── post/
+│       ├── testes/
+│       │   ├── abertos/       ← Testes em andamento
+│       │   │   ├── teste-hook-delegacao.md
+│       │   │   ├── teste-cta-vs-nocta.md
+│       │   │   └── teste-formato-stack.md
+│       │   └── consolidados/  ← Testes finalizados com conclusão
+│       │       ├── teste-hook-overlay.md
+│       │       └── teste-videos-bruno.md
+│       ├── learnings/         ← Aprendizados consolidados
+│       │   ├── resumo.md      ← TOP 7 aprendizados acionáveis
+│       │   ├── angulos.md     ← O que funciona por ângulo
+│       │   ├── hooks.md       ← Padrões de hook vencedor
+│       │   └── formatos.md    ← O que funciona por formato
+│       └── pipeline/
+│           └── state.json     ← Estado atual dos criativos (gerado por cron)
+├── rotinas/
+│   ├── meta-ads-report.md     ← Relatório 3x/dia (8h, 12h, 20h)
+│   ├── creative-pipeline.md   ← Recomendações diárias (pausar/escalar)
+│   └── funnel-report.md       ← Relatório de funil 1x/dia
+└── reports/
+    ├── meta-ads/              ← Relatórios HTML gerados automaticamente
+    ├── creative-pipeline/     ← Recomendações HTML
+    └── funnel/                ← Relatórios de funil
+```
+
+### Como funciona na prática — Etapa por etapa
+
+#### Etapa 1: Hipótese
+
+O time de marketing quer testar um novo ângulo. Pergunta ao agente:
+
+```
+"Com base nos resultados dos últimos testes, qual ângulo a gente ainda não explorou 
+que poderia funcionar?"
+```
+
+O agente consulta:
+- `learnings/resumo.md` — o que já sabemos que funciona
+- `angulos/` — catálogo de ângulos existentes
+- `testes/consolidados/` — o que já foi testado
+- `testes/abertos/` — o que está sendo testado agora
+
+E responde:
+
+```
+📊 Análise de gaps nos ângulos:
+
+Ângulos testados: delegação (ROAS 4.0x), prova-social (2.1x), não-técnico (1.8x)
+Ângulos NÃO testados: resultado-rapido, urgência
+
+Recomendação: testar "resultado-rapido" primeiro.
+Motivo: top learning #1 diz que "hook funcional específico > hook emocional".
+O ângulo resultado-rapido é naturalmente funcional ("em 30 min você tem X rodando").
+
+Formato sugerido: screen-recording (mostrar o resultado acontecendo)
+Hook sugerido: "Configurei isso em 30 minutos. Agora roda sozinho todo dia."
+```
+
+#### Etapa 2: Criativo
+
+O agente gera o criativo e documenta:
+
+**Arquivo `descriptions/c15.md`:**
+```markdown
+# C15 — Resultado Rápido · Screen Recording
+
+## Ângulo: resultado-rapido
+## Formato: screen-recording
+## Hook: "Configurei isso em 30 minutos. Agora roda sozinho todo dia."
+## Copy completa: [texto do ad]
+## Arquivo: banners/c15-resultado-rapido-story.png
+## Status: aguardando aprovação
+```
+
+**Arquivo `formatos/screen-recording.md`** já documenta as specs:
+```markdown
+# Screen Recording
+- Dimensões: 1080×1920 (story) ou 1080×1350 (post)
+- Estilo: gravação de tela real do produto em uso
+- Quando funciona: audiências técnicas, demonstrar features
+- Quando não funciona: público frio que não conhece o produto
+```
+
+O time aprova. O agente sobe na campanha de teste (ou o time sobe manualmente — por enquanto preferem subir na mão) e registra no `MAPA.md`:
+
+| Nome Interno | Nome no Meta Ads | Arquivo |
+|---|---|---|
+| C15 — Resultado Rápido | open-ad015-banner-asc | c15-resultado-rapido-story.png |
+
+E cria o arquivo de teste:
+
+**`testes/abertos/teste-resultado-rapido-screen.md`:**
+```markdown
+# Teste — Resultado Rápido · Screen Recording vs Talking Head
+
+Status: 🟢 Em andamento
+Data: 23/03/2026
+
+## Hipótese
+Screen recording performa melhor que talking head para o ângulo resultado-rapido,
+porque mostrar o resultado acontecendo gera mais crença que falar sobre ele.
+
+## Criativos
+| ID | Formato | Hook |
+|---|---|---|
+| C15 | Screen recording | "Configurei isso em 30 min..." |
+| C16 | Talking head | "Configurei isso em 30 min..." |
+
+## Variável isolada: formato (screen recording vs talking head)
+## Controle: mesmo hook, mesmo ângulo, mesmo CTA
+
+## Threshold: ≥ R$ 150 gasto por criativo
+## Resultado: ⏳ pendente
+```
+
+#### Etapa 3: Monitoramento automático
+
+Três crons rodam sem ninguém pedir:
+
+**Cron 1 — Relatório de ads (3x/dia, 8h/12h/20h):**
+```
+📢 Performance Diária — 23/03
+
+💰 Investido hoje: R$ 340
+🎯 ROAS médio: 3.1x
+📊 Top criativo: C8 delegação (ROAS 4.8x, 12 vendas)
+
+⚠️ ALERTA: C11 não-técnico — ROAS 0.7x há 3 dias
+→ Recomendação: pausar (já gastou R$ 180 sem retorno)
+```
+
+**Cron 2 — Pipeline de criativos (1x/dia, 9h30):**
+```
+📊 Pipeline — Status dos testes
+
+🟢 Em andamento (3 testes):
+- teste-resultado-rapido-screen: R$ 85/R$ 150 threshold (57%)
+- teste-cta-vs-nocta: R$ 210/R$ 150 ✅ pronto pra fechar
+- teste-formato-stack: R$ 120/R$ 150 (80%)
+
+🔴 Ação necessária:
+- teste-cta-vs-nocta atingiu threshold → fechar teste e documentar
+
+📈 Recomendações:
+- C8 delegação: ROAS 4.8x sustentado → escalar +30% budget
+- C15 resultado-rapido: sinais iniciais positivos (CTR 3.2%)
+```
+
+**Cron 3 — Relatório de funil (1x/dia, 8h):**
+```
+🔄 Funil — 23/03
+
+Página → CTA: 42% (meta: 35%) ✅
+CTA → Checkout: 18% (meta: 15%) ✅
+Checkout → Compra: 52% (meta: 50%) ✅
+
+Canal top: Meta Ads (68% das conversões)
+Canal fraco: Orgânico (3% das conversões, 12% do tráfego)
+```
+
+#### Etapa 4: Conclusão de teste
+
+Quando um teste atinge o threshold de dados, o agente sugere a conclusão:
+
+```
+📋 Teste pronto para fechar: teste-cta-vs-nocta
+
+Resultado:
+- Com CTA ("Comece agora"): ROAS 2.1x, CTR 2.8%
+- Sem CTA (implícito): ROAS 3.4x, CTR 2.2%
+
+Conclusão sugerida: CTA explícito aumenta CTR mas diminui ROAS.
+Hipótese: o CTA atrai curiosos (CTR alto) que não convertem (ROAS baixo).
+
+Ação sugerida:
+1. Mover teste para consolidados/
+2. Atualizar learnings/hooks.md: "CTA implícito > explícito para cold traffic"
+3. Aplicar learning nos próximos criativos
+
+Aprovar? (sim/não)
+```
+
+O time aprova. O agente:
+1. Move `testes/abertos/teste-cta-vs-nocta.md` → `testes/consolidados/`
+2. Atualiza `learnings/hooks.md` com o novo padrão
+3. Atualiza `learnings/resumo.md` se for top learning
+
+#### Etapa 5: Nova hipótese (o ciclo recomeça)
+
+O agente já tem todo o histórico. Na próxima rodada:
+
+```
+"Com base nos 3 últimos testes fechados, o que a gente deveria testar agora?"
+```
+
+```
+📊 Sugestão de próximo teste:
+
+Padrão encontrado: hooks com números específicos têm 3x mais ROAS.
+Learning: CTA implícito > explícito.
+Gap: não testamos "número + sem CTA" juntos.
+
+Hipótese: criativo com hook "7 tarefas automatizadas sem você fazer nada"
+(número específico + resultado implícito, sem CTA) deve bater o ad015.
+
+Formato sugerido: mission-control (screenshot do painel com os 7 tasks visíveis)
+```
+
+### O que o participante leva
+
+Não é "como criar um relatório de ads". É um **sistema que aprende sozinho**:
+- Documenta cada criativo com ângulo, hook, formato, copy
+- Testa hipóteses de forma isolada (uma variável por vez)
+- Monitora automaticamente (3 crons, zero trabalho manual)
+- Conclui testes com dados (não intuição)
+- Usa aprendizados passados para gerar hipóteses novas
+- O humano decide apenas O QUÊ testar e APROVA antes de subir
+
+### Regras de decisão (documentadas no agente)
+
+| Situação | Ação | Quem |
+|----------|------|------|
+| ROAS < 1.0x por 5 dias | Pausar criativo | Agente (automático) |
+| ROAS > 2.0x sustentado | Sugerir escalar | Agente sugere, humano aprova |
+| Teste atingiu threshold | Sugerir fechar | Agente sugere, humano aprova |
+| Frequency > 3.0 | Alertar fadiga | Agente alerta |
+| Novo criativo pronto | Upload na campanha | Humano (por enquanto) |
+
+> 💡 "A gente ainda prefere subir os criativos na mão. Mas você pode configurar pra eles subirem automaticamente pela API do Meta. A gente prefere estruturar isso manualmente por enquanto porque cada criativo tem nuances que a gente quer revisar antes."
 
 ---
 
-## Use Case 3: Atendimento — "SLA nunca fura"
+## Deep Dive 2: Vendas & Atendimento — Bot no WhatsApp
 
-### O problema
-Equipe de suporte recebe 15 tickets/dia. Sem controle centralizado, 3-4 tickets ficam sem resposta por 48h+. Aluno reclama no Instagram. Crise de imagem que podia ser evitada.
+### O panorama
 
-### A solução
-Agente de atendimento checa tickets toda manhã e alerta sobre pendências:
+Lead entra no WhatsApp da empresa. Hoje: alguém da equipe lê, responde quando pode (às vezes 4h depois), faz perguntas manuais pra qualificar, tenta agendar call, esquece de atualizar o CRM. Resultado: lead esfria, call não acontece, pipeline vira uma bagunça.
+
+O que a gente vai mostrar: um **agente de vendas no WhatsApp** que qualifica automaticamente, agenda call, e atualiza o CRM — tudo na mesma conversa.
+
+### A estrutura no cérebro
 
 ```
-🎧 Suporte — Status diário (23/03)
+areas/vendas/
+├── contexto/geral.md              ← Processo de vendas, produtos, preços
+├── skills/
+│   ├── qualificacao-lead/SKILL.md ← Como qualificar (perguntas, critérios)
+│   ├── agendamento-call/SKILL.md  ← Como agendar (disponibilidade, regras)
+│   └── atualizar-crm/SKILL.md    ← Como registrar no CRM
+├── rotinas/
+│   ├── follow-up-diario.md        ← Alertar leads sem contato há 48h
+│   └── relatorio-pipeline.md      ← Status do pipeline 1x/dia
+└── dados/
+    └── leads.csv                  ← Pipeline atualizado
 
-📬 Tickets abertos: 12
-✅ Respondidos < 2h: 8 (67%)
-⚠️ Pendentes > 24h: 3
-🔴 Pendentes > 48h: 1
-
-Tickets que precisam de ação AGORA:
-1. #412 — "Não consigo acessar o curso" — 36h sem resposta
-   → Verificar acesso na plataforma
-
-2. #418 — "Quero reembolso" — 28h sem resposta
-   → Escalar para liderança (reembolso > R$ 200)
-
-📊 SLA da semana: 72% respondidos em < 2h (meta: 90%)
+areas/atendimento/
+├── contexto/geral.md              ← FAQ, processos, SLA
+├── skills/
+│   └── resposta-suporte/SKILL.md  ← Base de conhecimento pra respostas
+└── rotinas/
+    └── checagem-tickets.md        ← Alertar tickets pendentes > 24h
 ```
 
-### Como implementar
-1. Dados de tickets (Crisp, Zendesk, ou planilha simples)
-2. Skill `checagem-tickets` que verifica pendências
-3. Cron diário 9h30 BRT → entrega no tópico/grupo de Atendimento
+### O fluxo completo
 
-### Resultado esperado
-- Zero tickets esquecidos por mais de 24h
-- SLA cumprido consistentemente (meta: 90% em < 2h)
-- Padrões de reclamação identificados em dias, não semanas
+#### 1. Lead chega no WhatsApp
+
+O lead manda mensagem no WhatsApp da empresa. O agente de vendas responde:
+
+```
+Lead: "Oi, vi o anúncio do curso de marketing. Quanto custa?"
+
+Agente: "Oi! Obrigado pelo interesse 😊
+O Curso de Marketing Digital custa R$ 197 (acesso vitalício).
+
+Pra te dar a melhor orientação, posso te fazer 2 perguntas rápidas?"
+
+Lead: "Pode sim"
+
+Agente: "Legal! 
+1. Você já investe em tráfego pago ou tá começando do zero?
+2. Tem algum objetivo específico? (ex: vender mais um produto, captar leads, etc.)"
+
+Lead: "Já invisto uns R$ 2K/mês em Meta Ads mas o ROAS tá ruim"
+
+Agente: "Entendi. R$ 2K/mês com ROAS baixo é exatamente o cenário 
+que o curso resolve — tem um módulo inteiro de otimização de criativos 
+que mostra como a gente saiu de ROAS 1.2x pra 3.5x.
+
+Mas se você já investe R$ 2K/mês, talvez valha a pena conhecer 
+a Mentoria Individual (R$ 2.997) — é personalizada pro seu negócio.
+Quer agendar uma call de 20 min com o Ricardo pra entender se faz sentido?"
+
+Lead: "Quero sim"
+
+Agente: "Perfeito! Tenho horários disponíveis:
+- Terça 24/03 às 10h
+- Quarta 25/03 às 14h
+- Quinta 26/03 às 10h
+
+Qual funciona melhor pra você?"
+
+Lead: "Terça 10h"
+
+Agente: "Agendado! ✅
+Terça 24/03 às 10h — call com Ricardo (20 min)
+Você vai receber um link do Google Meet por aqui.
+
+Enquanto isso, dá uma olhada nesse case: [link]
+Até terça! 🚀"
+```
+
+#### 2. O que acontece nos bastidores
+
+Enquanto a conversa acontece, o agente:
+
+**a) Qualifica o lead** usando a skill `qualificacao-lead`:
+```markdown
+# Qualificação — Lead WhatsApp
+
+## Critérios de qualificação
+| Critério | Peso | Resposta |
+|----------|------|----------|
+| Já investe em ads? | Alto | ✅ Sim, R$ 2K/mês |
+| Tem budget definido? | Alto | ✅ R$ 2K/mês |
+| Tem dor clara? | Alto | ✅ ROAS ruim |
+| Ticket potencial | Alto | R$ 2.997 (mentoria) |
+| Urgência | Médio | ⬆️ Alta (gastando sem retorno) |
+
+## Score: 9/10 — LEAD QUENTE 🔥
+## Produto recomendado: Mentoria Individual (R$ 2.997)
+## Ação: agendar call imediata
+```
+
+**b) Agenda a call** usando a skill `agendamento-call`:
+- Consulta disponibilidade do Ricardo
+- Bloqueia horário no Google Calendar
+- Envia convite com link do Meet
+
+**c) Atualiza o CRM** usando a skill `atualizar-crm`:
+```
+Lead: João Silva
+Fonte: WhatsApp (Meta Ads)
+Produto: Mentoria Individual (R$ 2.997)
+Status: Call agendada → 24/03 10h com Ricardo
+Score: 9/10
+Contexto: investe R$ 2K/mês em Meta Ads, ROAS ruim
+Próximo passo: call de fechamento
+```
+
+**d) Notifica a equipe** no tópico 💰 Vendas:
+```
+💰 Novo lead qualificado
+
+João Silva — WhatsApp (via Meta Ads)
+Score: 9/10 🔥
+Produto: Mentoria Individual (R$ 2.997)
+Call agendada: terça 24/03 10h com Ricardo
+
+Contexto: já investe R$ 2K/mês em Meta Ads, ROAS baixo.
+Boa oportunidade — lead com dor clara e budget alto.
+```
+
+#### 3. Follow-up automático
+
+Se o lead não aparece na call, o agente não esquece:
+
+**Cron follow-up (diário 9h):**
+```
+📋 Follow-up — Leads sem ação
+
+🔴 Call no-show (ontem):
+1. João Silva — Mentoria (R$ 2.997) — não apareceu na call
+   → Enviar WhatsApp: "Oi João, não conseguimos nos conectar ontem. 
+     Quer reagendar? Tenho horário quinta 10h."
+
+🟡 Sem contato há 3 dias:
+2. Maria Souza — Curso (R$ 197) — pediu info e sumiu
+   → Enviar WhatsApp com conteúdo de valor (case study)
+
+📊 Pipeline: 15 leads ativos, R$ 24K em potencial
+```
+
+#### 4. Quando o lead é de suporte (não de venda)
+
+O agente identifica e redireciona:
+
+```
+Lead: "Oi, comprei o curso semana passada mas não consigo acessar"
+
+Agente: "Oi! Isso é suporte, vou resolver pra você agora.
+Qual email você usou na compra?"
+
+Lead: "joao@email.com"
+
+Agente: "Encontrei seu acesso. O problema é que o email de login 
+é diferente (joaosilva@email.com). Tenta com esse.
+
+Se não funcionar, me avisa que escalo pro time de suporte."
+```
+
+E nos bastidores:
+- Consulta a base de dados de alunos
+- Verifica o problema
+- Se resolver, registra como ticket resolvido
+- Se não resolver, escala pro time de atendimento (tópico 🎧 Atendimento)
+
+### O que o participante leva
+
+Um fluxo de vendas que:
+- **Nunca dorme** — lead às 23h recebe resposta imediata
+- **Qualifica automaticamente** — perguntas certas, score, produto recomendado
+- **Agenda sem atrito** — propõe horários, bloqueia agenda, envia link
+- **Atualiza CRM sozinho** — zero trabalho manual de registro
+- **Faz follow-up** — nenhum lead esquecido, nenhuma call perdida sem retry
+- **Distingue venda de suporte** — redireciona sem perder o contexto
+
+### Configuração do agente WhatsApp
+
+```json
+{
+  "channel": "whatsapp",
+  "agent": "vendas",
+  "allowFrom": ["*"],  // qualquer lead pode falar
+  "mode": "ask",       // ações sensíveis pedem aprovação
+  "context": [
+    "areas/vendas/",
+    "empresa/contexto/empresa.md",
+    "empresa/contexto/equipe.md"
+  ]
+}
+```
+
+### Regras de decisão
+
+| Situação | Ação | Quem |
+|----------|------|------|
+| Lead pergunta preço | Responder + qualificar | Agente |
+| Lead qualificado (score ≥ 7) | Propor call | Agente |
+| Lead quer comprar direto | Enviar link de checkout | Agente |
+| Lead reclama / suporte | Redirecionar pra atendimento | Agente |
+| Reembolso solicitado | Escalar pra liderança | Agente escala, humano decide |
+| Call no-show | Retry 1x (reagendar) | Agente |
+| Retry ignorado 2x | Marcar como "frio" e parar | Agente |
+| Lead de ticket > R$ 2K | Notificar liderança imediatamente | Agente |
+
+> 💡 "A gente configura o agente de vendas em modo ask pra ações sensíveis — ele qualifica e agenda sozinho, mas se for um reembolso ou um lead muito grande, ele escala pro time humano aprovar."
 
 ---
 
-## Use Case 4: Operações — "O agente cuida de si mesmo"
+## Como os Deep Dives se encaixam na Imersão
 
-### O problema
-O dono configurou 5 crons. Depois de 2 semanas, 2 pararam de funcionar (API expirou, formato de dados mudou). Ninguém percebeu por 10 dias. Os relatórios simplesmente pararam de chegar, e ninguém sentiu falta até precisar de um número.
+### Dia 1 (expositivo — 3h)
+O Bruno mostra **o sistema funcionando**:
+- Abre o repo, navega pela estrutura de marketing
+- Mostra o PROCESSO.md e o ciclo completo
+- Mostra um teste aberto, um consolidado, e os learnings
+- Mostra o bot de WhatsApp respondendo um lead ao vivo
+- Mostra o CRM sendo atualizado em tempo real
 
-### A solução
-Heartbeat do agente geral monitora todos os crons a cada hora:
-
-```
-🚨 ALERTA — Cron com erro
-
-Cron: relatorio-vendas-diario
-Status: 3 erros consecutivos
-Último erro: "Arquivo dados/vendas.csv não encontrado"
-Desde: 21/03 08:00
-
-Diagnóstico: o arquivo foi renomeado ou movido
-→ Ação sugerida: verificar se o caminho do CSV mudou
-
-Cron: relatorio-campanha-semanal  
-Status: ✅ OK (último run: hoje 08:00)
-
-Cron: follow-up-leads-diario
-Status: ✅ OK (último run: hoje 09:00)
-```
-
-### Como implementar
-1. Heartbeat configurado (`heartbeat.every: "1h"`)
-2. `HEARTBEAT.md` com checklist: pendências, prazos, crons, memória
-3. Skill `relatorio-rotinas` que lista status de todos os crons
-
-### Resultado esperado
-- Crons quebrados detectados em 1h, não 10 dias
-- Agente se auto-diagnostica e sugere correção
-- Dono dorme tranquilo sabendo que o sistema monitora a si mesmo
+### Dia 2 (hands-on — 3h)
+Os participantes **montam o próprio sistema**:
+- Escolhem: marketing (criativos) ou vendas (bot WhatsApp)
+- Criam a estrutura de pastas
+- Documentam seus próprios ângulos/formatos OU fluxo de qualificação
+- Configuram pelo menos 1 cron
+- Saem com o sistema básico rodando
 
 ---
 
-## Use Case 5: Cross-área — "Decisão com contexto completo"
-
-### O problema
-O CEO pergunta: "Como estamos esse mês?" Todo mundo responde com um pedaço. Vendas manda planilha. Marketing manda print do ads. Atendimento fala "tá tranquilo". Ninguém tem a visão completa. A reunião semanal vira coleta de dados em vez de tomada de decisão.
-
-### A solução
-Agente geral consolida todas as áreas num relatório semanal:
-
-```
-📊 Resumo Semanal — Empresa Exemplo (17-23/03)
-
-💰 VENDAS
-- Faturamento: R$ 8.400 (semana) | R$ 28.700 (mês)
-- Meta: R$ 40K → 71,8% atingido, ritmo projeta R$ 36K
-- 3 leads urgentes sem follow-up
-
-📢 MARKETING
-- Investimento ads: R$ 1.250 | ROAS médio: 3.28
-- Melhor criativo: "5 ferramentas IA" (ROAS 4.2)
-- 1 campanha com ROAS < 1.0 → pausar
-
-🎧 ATENDIMENTO
-- 58 tickets na semana | SLA 78% (meta 90%)
-- Padrão: 12 tickets sobre "acesso ao curso" → possível bug
-
-⚙️ OPERAÇÕES
-- 5 crons ativos, todos OK
-- Repo atualizado (14 commits na semana)
-
-📋 AÇÕES RECOMENDADAS:
-1. Ligar para 3 leads urgentes de mentoria (R$ 9K em jogo)
-2. Pausar campanha "retargeting geral" (ROAS 0.8)
-3. Investigar bug de acesso ao curso (12 tickets)
-4. SLA caiu 12pp → revisar processo com Juliana
-```
-
-### Como implementar
-1. Agente geral com acesso a todas as áreas
-2. Cada agente de área gera seus dados via crons próprios
-3. Cron semanal (sexta 17h) consolida tudo num relatório único
-4. Entrega no grupo de Liderança
-
-### Resultado esperado
-- Reunião semanal começa com contexto completo (não coleta de dados)
-- CEO toma decisões em 15 min, não 1h
-- Problemas cross-área detectados automaticamente (12 tickets sobre acesso = bug)
-
----
-
-## Qual usar na imersão?
-
-Para o Dia 2 (hands-on), cada participante escolhe o use case mais relevante:
-
-| Se o negócio... | Use case recomendado |
-|-----------------|---------------------|
-| Tem vendas com pipeline | Use Case 1 (Vendas) |
-| Gasta com ads | Use Case 2 (Marketing) |
-| Recebe tickets de suporte | Use Case 3 (Atendimento) |
-| Já tem crons rodando | Use Case 4 (Operações) |
-| Tem equipe e quer visão geral | Use Case 5 (Cross-área) |
-
----
-
-*Use cases — Imersão OpenClaw nos Negócios*
+*Deep dives — Imersão OpenClaw nos Negócios*
