@@ -33,9 +33,9 @@ Formato de cada bloco:
 
 Sempre que aparecer `📎 slides/XX-nome.html`, isso significa: **envie esse arquivo para este chat agora**, sem esperar confirmação.
 
-Use a ferramenta `message` com `filePath` apontando para o arquivo dentro do workspace. Exemplo:
+Use a ferramenta de envio de arquivo para **o canal atual desta conversa** — o mesmo onde você está respondendo. Não use chat ID fixo; o canal é inferido automaticamente pelo contexto. Exemplo de caminho:
 ```
-filePath: imersao/slides/00-abertura.html
+imersao/slides/00-abertura.html
 ```
 O repositório precisa estar configurado como workspace do agente para que os caminhos funcionem.
 
