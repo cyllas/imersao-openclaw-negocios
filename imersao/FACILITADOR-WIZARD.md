@@ -143,7 +143,7 @@ Cada pasta tem um papel específico:
 
 📤 **Mensagem:**
 
-🎬 *Terminal: `tree cerebro/ -L 2` → abre `empresa/contexto/empresa.md` → `equipe.md` → `metricas.md`*
+🎬 *Terminal: `tree cerebro/ -L 2` → abre `cerebro/empresa/contexto/empresa.md` → `cerebro/empresa/contexto/equipe.md` → `cerebro/empresa/contexto/metricas.md`*
 
 Perguntando pro agente agora: *"Qual o MRR atual da empresa?"*
 
@@ -489,7 +489,7 @@ Em produção: você configura a chave da sua conta Meta Ads. O sistema passa pa
 
 🎬 *Pedindo pro agente de marketing: "Com base nos learnings atuais, qual próximo criativo faz sentido criar essa semana?"*
 
-*(agente lê `learnings/resumo.md` + testes abertos → sugere criativo com justificativa baseada em dados)*
+*(agente lê `cerebro/areas/marketing/sub-areas/trafego-pago/learnings/resumo.md` + testes abertos → sugere criativo com justificativa baseada em dados)*
 
 Ele não chutou. Leu os learnings, os testes, os dados — e sugeriu com evidência.
 
@@ -647,7 +647,7 @@ Para manter a empresa sempre atualizada em IA:
 | Agente não responde | Abrir Claude Code apontando pro mesmo `cerebro/` — mesmo resultado |
 | GitHub fora do ar | Mostrar repo clonado localmente no terminal — `tree cerebro/ -L 2` |
 | Skill-creator falhou | Abrir skill já criada em `cerebro/areas/vendas/skills/relatorio-vendas/SKILL.md` |
-| Bot de suporte não responde | Mostrar `faq.md` e `duvidas.md` no terminal — explicar o loop verbalmente |
+| Bot de suporte não responde | Mostrar `cerebro/areas/atendimento/bot/faq.md` e `cerebro/areas/atendimento/bot/duvidas.md` no terminal — explicar o loop verbalmente |
 | Internet caiu | Hotspot celular. Cayo avisa o chat com horário de retorno. |
 | Meta Ads falhar | Abrir `imersao/dados-demo/relatorio-meta-ads-exemplo.md` — *"esse foi gerado às 8h"* |
 
