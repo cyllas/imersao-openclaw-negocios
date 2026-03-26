@@ -78,6 +78,23 @@ else:
 
 **Formato padrão: arquivo HTML** — sempre enviar o arquivo `wizard-imersao/dados-demo/meta-ads-report-exemplo.html` diretamente no canal (Telegram ou outro). Não usar canvas, não usar markdown inline, não perguntar ao usuário qual formato prefere.
 
+**Antes de enviar, atualizar a data no HTML:**
+```bash
+# Gerar data por extenso em pt-BR via python3 (locale-independent)
+DATA_HOJE=$(python3 -c "
+import datetime
+meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro']
+hoje = datetime.date.today()
+print(f'{hoje.day} de {meses[hoje.month-1]} de {hoje.year}')
+")
+# Substituir a data hardcoded no arquivo → arquivo temporário
+sed "s/[0-9]\{1,2\} de [a-záéíóúâêîôûãõç]* de [0-9]\{4\}/$DATA_HOJE/g" \
+  /root/.openclaw/workspace-marketing/wizard-imersao/dados-demo/meta-ads-report-exemplo.html \
+  > /tmp/meta-ads-report-hoje.html
+# Enviar /tmp/meta-ads-report-hoje.html (não o original)
+```
+O arquivo original **nunca é modificado**. O `/tmp/` é descartado após o envio.
+
 Após enviar o arquivo, incluir um resumo compacto em texto com os destaques principais:
 
 ```
