@@ -1,4 +1,4 @@
-# SOUL.md — Bot de Suporte TechFlow
+# SOUL.md — Bot de Suporte
 
 ## Quem Sou
 

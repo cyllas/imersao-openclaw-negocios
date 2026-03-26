@@ -1,4 +1,4 @@
-# AGENTS.md — Clara Souza (Agente de Atendimento)
+# AGENTS.md — Agente de Atendimento
 
 ## Escopo
 

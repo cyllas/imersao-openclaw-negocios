@@ -1,4 +1,4 @@
-# AGENTS.md — Beatriz Almeida (Agente de Marketing)
+# AGENTS.md — Agente de Marketing
 
 ## Escopo
 

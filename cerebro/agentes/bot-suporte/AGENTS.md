@@ -1,4 +1,4 @@
-# AGENTS.md — Bot de Suporte TechFlow
+# AGENTS.md — Bot de Suporte
 
 ## Escopo de Acesso
 

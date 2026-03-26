@@ -1,4 +1,4 @@
-# AGENTS.md — Marcos Viana (Agente de Vendas)
+# AGENTS.md — Agente de Vendas
 
 ## Escopo
 

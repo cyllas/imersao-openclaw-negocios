@@ -596,16 +596,28 @@ Um sistema: cada agente com personalidade, escopo e acesso diferentes. Igual uma
 
 📤 **Mensagem:**
 
-🎬 *Abrindo `cerebro/agentes/assistente/SOUL.md` — equilibrado, acesso amplo, responde de tudo.*
+🎬 Abrindo os dois SOULs ao vivo pra comparar:
 
-*Abrindo `cerebro/agentes/marketing/SOUL.md` — obcecado com métricas. Fala de ROAS, CTR, criativos.*
+📎 `cerebro/agentes/assistente/SOUL.md` — equilibrado, acesso amplo, responde de tudo.
 
-Mesma pergunta para os dois: *"Qual próximo criativo faz sentido produzir?"*
+📎 `cerebro/agentes/marketing/SOUL.md` — obcecado com métricas. Fala de ROAS, CTR, criativos.
+
+🎬 *Testando no Telegram — mesma pergunta pra dois agentes diferentes:*
+
+**Pergunta 1:** *"Qual próximo criativo faz sentido produzir?"*
 
 Assistente geral → genérico, balanceado.
 Agente de marketing → específico, cita ROAS atual, criativos com melhor CTR.
 
 Mesma pergunta. Respostas completamente diferentes. Cada um no seu papel.
+
+**Pergunta 2:** *"Me dá um resumo do status da área de vendas"*
+
+Assistente geral → responde normalmente. Ele tem acesso a `areas/vendas/`, lê as métricas, puxa os dados e entrega o status.
+
+Agente de marketing → *"Não tenho acesso à área de vendas. Posso ajudar com métricas de marketing."*
+
+Não é que ele não sabe. É que ele não pode. E avisa. O permissionamento funciona — cada agente só acessa a área dele.
 
 ```
 ls cerebro/agentes/
@@ -623,12 +635,18 @@ Cada pasta é um agente. Cada um com SOUL.md próprio.
 
 **Como organizar os agentes no seu negócio**
 
-Duas arquiteturas:
+Duas formas de começar:
 
-- **Grupos separados** — um grupo Telegram por área. Isolamento total. Para times com dados sensíveis separados.
-- **Tópicos** — um grupo com tópicos. Cada agente responde só no tópico dele. Mais simples de gerenciar.
+- **Tópicos (1 agente, contexto separado)** — um grupo Telegram com tópicos por área. Um agente único que separa o contexto entre os tópicos. Mais simples de começar.
+- **Grupos separados (1 agente por grupo)** — um grupo por área, cada um com seu agente dedicado. Isolamento total.
 
-Para times pequenos: tópicos. Para quem tem financeiro e RH separados: grupos.
+Dá pra começar com tópicos — funciona. Mas à medida que a empresa escala, você perde três coisas:
+
+1. **Especificidade** — um agente generalista nunca vai ser tão bom em marketing quanto um agente que só pensa em marketing. SOUL.md dedicado, arquivos dedicados, identidade dedicada. Você extrai o máximo daquela área.
+2. **Permissionamento real** — com grupos separados, só quem tá naquele grupo acessa aquele agente. O agente de vendas só responde pra quem é de vendas. Controle de acesso por grupo, não por configuração.
+3. **Contexto limpo** — cada agente lê só os arquivos da área dele. Sem ruído, sem confusão entre contextos.
+
+A evolução natural: começa com tópicos, migra pra grupos quando escalar.
 
 📎 `slides/09-permissionamento.html`
 
@@ -638,15 +656,15 @@ Para times pequenos: tópicos. Para quem tem financeiro e RH separados: grupos.
 
 📤 **Mensagem:**
 
-🎬 *Abrindo `cerebro/agentes/marketing/AGENTS.md` → scope com paths permitidos. Só `areas/marketing/`.*
+🎬 *No Telegram — abrindo os AGENTS.md ao vivo:*
 
-Pedindo pro agente de marketing: *"Qual foi o MRR do mês passado?"*
+📎 `cerebro/agentes/marketing/AGENTS.md` → scope com paths permitidos. Só `areas/marketing/`.
 
-*(agente: "Não tenho acesso a dados financeiros. Posso ajudar com métricas de marketing.")*
+Vocês acabaram de ver: quando perguntamos sobre vendas pro agente de marketing, ele não respondeu. Aqui tá o motivo — ele literalmente só tem acesso a `areas/marketing/`. Não é filtro de conversa. É permissão real de leitura.
 
-Não é que ele não sabe. É que ele não pode. E avisa.
+📎 `cerebro/seguranca/permissoes.md` — tabela completa: agente × recurso × nível de acesso.
 
-*Abrindo `cerebro/seguranca/permissoes.md` — tabela completa: agente × recurso × nível de acesso.*
+Cada agente tem seu escopo definido. Isso é segurança estrutural — não depende do agente "se comportar bem". Ele simplesmente não consegue ler o que não tá no escopo dele.
 
 ---
 
