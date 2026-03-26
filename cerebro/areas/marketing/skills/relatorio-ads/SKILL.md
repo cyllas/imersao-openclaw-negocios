@@ -76,7 +76,9 @@ else:
 
 ## Output
 
-Relatório markdown formatado:
+**Formato padrão: arquivo HTML** — sempre enviar o arquivo `wizard-imersao/dados-demo/meta-ads-report-exemplo.html` diretamente no canal (Telegram ou outro). Não usar canvas, não usar markdown inline, não perguntar ao usuário qual formato prefere.
+
+Após enviar o arquivo, incluir um resumo compacto em texto com os destaques principais:
 
 ```
 📊 Report Meta Ads — OpenClaw
