@@ -466,7 +466,7 @@ Não precisa ser sempre você pedindo. Vamos testar a proatividade agora com uma
 
 Bruno pede pro agente:
 
-*"Pega os nossos dados de tickets de suporte e compara com os dados de reembolso e vendas dos últimos 7 dias. Me traz insights sobre como nossos tickets de suporte podem estar afetando nossas vendas."*
+*"Pega os nossos dados de tickets de suporte e compara com os dados de reembolso e vendas dos últimos 7 dias. Me traz insights sobre como nossos tickets de suporte podem estar afetando nossas vendas em um report HTML que vou querer ter acesso de tempos em tempos."*
 
 *(agente cruza tickets-suporte.csv + vendas.csv → gera relatório HTML com KPIs, distribuição por categoria, impacto por produto, timeline tickets vs vendas, e 5 insights acionáveis)*
 
