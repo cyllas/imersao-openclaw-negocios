@@ -152,6 +152,35 @@ Você conecta uma ferramenta nova → ela lê o mesmo Cérebro → começa a tra
 
 ---
 
+📤 **Mensagem:**
+
+**Como o agente se conecta ao Cérebro — o Symlink**
+
+Ok, o Cérebro é um repo GitHub. Mas como o agente lê esses arquivos no dia a dia?
+
+A resposta: **symlink**. É um atalho — igual atalho de desktop no Windows.
+
+Em vez de ter duas cópias do mesmo arquivo (uma no workspace do agente e outra no repo), o arquivo do workspace é só um ponteiro que diz "vá ler o arquivo que está lá no repo".
+
+**Sem symlink (cópia):**
+- Workspace: `SOUL.md` ← arquivo independente
+- Repo: `cerebro/agentes/marketing/SOUL.md` ← outro arquivo independente
+- Atualiza um, o outro fica desatualizado ❌
+
+**Com symlink:**
+- Workspace: `SOUL.md` → aponta pro `cerebro/agentes/marketing/SOUL.md`
+- É o mesmo arquivo. Atualizar um = atualizar o outro ✅
+
+Quando o agente lê o `SOUL.md`, ele tá lendo direto do cérebro no repo. Sem duplicação, sem risco de ficar fora de sync.
+
+E a cada alteração, o agente faz push pro repo — o cérebro no GitHub é sempre a versão mais atual.
+
+📎 `slides/02b-symlink.html`
+
+⏸ *Aguarda "próximo"*
+
+---
+
 ### Bloco 2: Tour pelo Cérebro — 9h35 (25 min)
 
 ---
