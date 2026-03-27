@@ -210,21 +210,17 @@ A estrutura se repete — empresa, área, sub-área. Sempre os mesmos 4 pilares:
 
 O agente não adivinha onde as coisas estão. Ele lê o `MAPA.md`.
 
-O `MAPA.md` da empresa é o ponto de entrada — mostra a estrutura completa do Cérebro: todas as pastas, o que cada uma contém, quais áreas existem, quais skills estão ativas.
+Cada nível do Cérebro tem um `MAPA.md` — o agente lê e sabe exatamente onde está e o que tem disponível.
 
-Dentro de `contexto/` você encontra sempre os mesmos arquivos:
-- `geral.md` — o que é, objetivo, KPIs
-- `people.md` — quem trabalha aqui, responsabilidades, estrutura de decisão
-- `decisions.md` — decisões tomadas, com contexto e status
-- `lessons.md` — lições aprendidas com erros e acertos
+🎬 Abrindo ao vivo — do geral pro específico:
 
-🎬 Abrindo ao vivo:
+📂 `cerebro/MAPA.md` ← abrir arquivo ao vivo — mapa da raiz do Cérebro
 
-📎 `cerebro/empresa/MAPA.md`
+📂 `cerebro/empresa/MAPA.md` ← abrir arquivo ao vivo — mapa da empresa
 
 Cada área também tem o seu próprio `MAPA.md`:
 
-📎 `cerebro/areas/vendas/MAPA.md`
+📂 `cerebro/areas/vendas/MAPA.md` ← abrir arquivo ao vivo — mapa da área de vendas
 
 O agente chega → lê o MAPA da empresa → entende a estrutura → vai pro MAPA da área → encontra contexto, skills, rotinas e projetos. É assim que ele navega sem se perder, mesmo quando o Cérebro tem dezenas de arquivos.
 
