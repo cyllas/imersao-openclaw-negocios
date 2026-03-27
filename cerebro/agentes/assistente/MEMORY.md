@@ -19,5 +19,8 @@
 - Atendimento → `second-brain/areas/atendimento/`
 - Operações → `second-brain/areas/operacoes/`
 
+### Agente (configuração permanente — repositório)
+- Mapeamento de canais/tópicos → `second-brain/cerebro/agentes/assistente/channels.md`
+
 ### Agente (memória local — só meu)
 - Notas diárias → `memory/YYYY-MM-DD.md` (rascunho temporário — consolidar no repo)
