@@ -92,27 +92,19 @@ Se não conseguir detectar o ambiente, envie apenas a referência textual do sli
 
 Dois dias, 100% demo ao vivo. Nada de slide teórico — o sistema vai funcionar na frente de vocês.
 
-Seus instrutores:
-- **Bruno Okamoto** — CCO & Fundador · Apresentador da Imersão
-- **Cayo Syllos** — CEO & Co-Fundador · Copiloto da Imersão
-- **Matheus** — COO & Co-Fundador · 💬 no Chat — Tire dúvidas com ele
-
-**Dia 1 — hoje — Fundação do Sistema:**
-Vocês saem com o Cérebro construído, entendendo a estrutura e com 5 skills prontas de marketing para usar imediatamente.
+Dia 1 — hoje:
 - O problema e a arquitetura
-- O Cérebro — estrutura e organização
+- O Cérebro — o que é e como funciona
 - Skills — automações em linguagem natural
 - Skill-creator — o agente cria skills
 - Crons — o sistema roda sozinho
 - Segurança em 3 camadas
 
-**Dia 2 — amanhã — Sistema Completo:**
-Vocês saem com o sistema multi-agente configurado, marketing e suporte automatizados e seu plano de 30 dias.
-- Multi-agente — cada um no seu papel
-- Permissionamento por área
+Dia 2 — amanhã:
+- Multi-agente
 - Marketing de performance automatizado
 - Bot de suporte que aprende sozinho
-- Plano 30 dias — como começar
+- Como começar na sua empresa
 
 📎 `slides/00-abertura.html`
 
@@ -151,12 +143,6 @@ O problema não é a IA. É onde a memória fica.
 GitHub no centro. Ferramentas ao redor — OpenClaw, Claude Code, Cursor, qualquer outra que surgir.
 
 Você conecta uma ferramenta nova → ela lê o mesmo Cérebro → começa a trabalhar como se já soubesse tudo da empresa.
-
-4 pilares do sistema:
-- **Sync automático** — todos recebem as mudanças do repo
-- **Controle de versão** — histórico completo de toda evolução
-- **Colaboração** — humanos + IA no mesmo repositório
-- **Revisão técnica** — todo push precisa de aprovação antes do merge
 
 🎬 *Abrindo o repo ao vivo: `github.com/pixel-educacao/imersao-openclaw-negocios` → navega pelo `cerebro/` → abre `cerebro/agentes/COMO-CONECTAR.md`*
 
@@ -538,55 +524,17 @@ Amanhã às 9h, sem ninguém pedir: relatório de vendas + alerta de leads esfri
 
 ---
 
-### Bloco 6: Segurança — 11h35 (20 min)
+### Bloco 6: Segurança — 11h35 (15 min)
 
 ---
 
 📤 **Mensagem:**
 
-**Segurança no OpenClaw — o risco é real**
+**Segurança em 3 camadas**
 
-Antes de falar de proteção, preciso que vocês entendam a escala do problema:
-
-- **21.000+ instâncias OpenClaw** expostas publicamente com chaves de API vazadas (BitSight, março 2026)
-- **88% das empresas** que usam agentes IA tiveram incidente de segurança confirmado ou suspeito no último ano
-- **Prompt Injection** é o ataque #1 segundo OWASP LLM Top 10 (2025-2026)
-- A boa notícia: com hardening correto, a superfície de ataque cai **~90%**
-
-OpenClaw tem acesso a shell, arquivos, APIs, credenciais, browser. É poder real — e poder sem controle é brecha.
-
-📎 `slides/04c-seguranca.html`
-
-⏸ *Aguarda "próximo"*
-
----
-
-📤 **Mensagem:**
-
-**As 3 camadas de proteção**
-
-Não é escolher uma. São as 3 juntas.
-
-**Camada 1 — Servidor (a fundação):**
-- SSH key-only — desabilitar login com senha
-- Fail2ban — ban automático após 5 tentativas
-- UFW Firewall — só portas 22, 80, 443
-- Gateway em localhost — nunca expor porta 18789 publicamente
-- Updates automáticos — fecha CVEs conhecidas
-
-**Camada 2 — Agente (o comportamento):**
-- `dmPolicy: allowlist` — só IDs autorizados falam com o bot
-- Credenciais no `.env` com `chmod 600` — nunca em código ou markdown
-- Skills auditadas — ler código antes de instalar (supply chain attack é real)
-- Allowlist de comandos — restringir o que o agente pode executar
-- `requireMention: true` — bot só responde quando mencionado em grupos
-
-**Camada 3 — Processo (a disciplina):**
-- Dupla autorização pra produção — 2 confirmações antes de alterar banco
-- Audit crons — auditoria diária automática
-- Logs completos — toda ação com timestamp
-- Rotação de tokens — trocar chaves a cada 90 dias
-- Memória no GitHub — backup persistente de decisões
+- **Dados locais** — tudo na sua máquina ou no seu repo privado. O modelo processa, não armazena.
+- **Modo ask** — para qualquer ação irreversível, o agente pede permissão antes de executar.
+- **Controle granular** — cada agente acessa só o que você permitiu. Bot de suporte não vê financeiro.
 
 📎 `slides/07-seguranca.html`
 
@@ -596,24 +544,17 @@ Não é escolher uma. São as 3 juntas.
 
 📤 **Mensagem:**
 
-**Os 5 riscos que vocês precisam conhecer (OWASP Top 10 Agentic 2026)**
-
-1. **Prompt Injection** — instrução maliciosa disfarçada de texto normal. Defesa: não processar conteúdo não-confiável automaticamente.
-2. **Tool Misuse** — agente usa ferramenta autorizada de forma destrutiva. Defesa: princípio do menor privilégio + confirmação humana pra ações críticas.
-3. **Goal Hijack** — atacante manipula input pra mudar o objetivo do agente. Defesa: dmPolicy allowlist + system prompt hardening.
-4. **Memory Poisoning** — alguém injeta info falsa na memória. Defesa: validar fontes + revisar MEMORY.md periodicamente.
-5. **Privilege Abuse** — agente herda credenciais demais. Defesa: tokens com escopo mínimo + separar agentes por função.
-
-🎬 *Testando ao vivo — modo ask no Telegram:*
+🎬 *Testando no Telegram — pedindo pro agente via OpenClaw:*
 
 *"Deleta o arquivo teste.md"*
+
 *(agente: "Confirma que quer deletar teste.md? (sim/não)")*
 
-Ele não age sozinho em coisas que importam. E no `AGENTS.md`, tá definido exatamente o que cada agente pode e não pode fazer.
+Ele não age sozinho em coisas que importam. Isso é o modo ask — funciona no OpenClaw nativamente.
 
-🎬 *Abrindo `cerebro/agentes/assistente/AGENTS.md` → seção "O Que Pode vs O Que Precisa Pedir".*
+🎬 *Ainda no Telegram — abrindo `cerebro/agentes/assistente/AGENTS.md` → seção "O Que Pode vs O Que Precisa Pedir".*
 
-Esse agente pode ler tudo de `empresa/` e `areas/`. Mas não toca em `seguranca/` nem faz push pro GitHub sem aprovação.
+Esse agente pode ler tudo de `empresa/` e `areas/`. Mas não toca em `seguranca/` nem faz push pro GitHub sem aprovação. Tudo que sai da máquina, ele para e confirma.
 
 ---
 
