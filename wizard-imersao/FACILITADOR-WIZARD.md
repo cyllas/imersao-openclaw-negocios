@@ -647,11 +647,23 @@ Hoje:
 
 📤 **Mensagem:**
 
-**De 1 agente para um sistema**
+**De 1 agente para um sistema — a evolução**
 
-1 agente generalista faz tudo — mas não é especialista em nada.
+A maioria começa com 1 agente pessoal no privado. Depois expande pra equipe. Depois segmenta por áreas. Cada estágio resolve um problema.
 
-Um sistema: cada agente com personalidade, escopo e acesso diferentes. Igual uma equipe real — você não pede pro vendedor fazer o suporte.
+Um aluno nosso, o Walter da Triângulo Laser — indústria de corte a laser com ~40 funcionários no interior de MG — montou em 14 dias um agente com 30+ endpoints cobrindo produção, financeiro, comercial, estoque e RH. Tudo conectado ao ERP próprio deles. Isso é o estágio 2. Funciona muito bem. Mas conforme escala, o próximo passo natural é especializar.
+
+📎 `slides/07d-evolucao-agentes.html`
+
+⏸ *Aguarda "próximo"*
+
+---
+
+📤 **Mensagem:**
+
+**Estágio 4 — o suprassumo: cada área com seu agente**
+
+Cada agente com personalidade, escopo e acesso próprios. Um agente master no topo coordena, audita e gera relatórios de evolução. Todos lendo do mesmo Cérebro.
 
 📎 `slides/08-multi-agente.html`
 
