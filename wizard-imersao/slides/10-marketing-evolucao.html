@@ -66,7 +66,7 @@
     bottom:24px;
     width:4px;
     border-radius:2px;
-    background:linear-gradient(to bottom, var(--text3) 0%, var(--yellow) 18%, var(--blue) 36%, var(--green) 54%, var(--purple) 72%, var(--accent) 90%);
+    background:linear-gradient(to bottom, var(--text3) 0%, var(--yellow) 18%, var(--blue) 36%, var(--green) 54%, var(--purple) 72%, var(--accent) 100%);
   }
 
   /* STAGE */
@@ -157,24 +157,35 @@
   }
   .result-text strong { color:var(--text); font-size:13px; display:block; margin-bottom:2px; }
 
-  /* NEXT STEP - dashed */
-  .next-step {
-    position:relative;
+  /* NEXT STEP — standalone outside timeline */
+  .next-step-standalone {
+    margin-top:20px;
     display:flex;
-    align-items:stretch;
-    min-height:90px;
+    align-items:center;
+    gap:16px;
+    padding:16px 22px;
+    border:2px dashed var(--text3);
+    border-radius:14px;
     opacity:0.55;
-  }
-  .next-step .dot {
-    background:var(--bg3);
-    border:3px dashed var(--text3);
-    color:var(--text3);
-    font-size:14px;
-  }
-  .next-step .card {
-    border-style:dashed;
-    border-color:var(--text3);
     background:transparent;
+  }
+  .nss-icon {
+    width:42px; height:42px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px; font-weight:900; color:var(--text3);
+    border:2px dashed var(--text3);
+    background:var(--bg3);
+    flex-shrink:0;
+  }
+  .nss-content { flex:1; }
+  .nss-label { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--text3); }
+  .nss-title { font-size:16px; font-weight:800; color:var(--text3); margin-top:2px; }
+  .nss-desc { font-size:12px; color:var(--text3); margin-top:2px; }
+  .nss-badge {
+    font-size:11px; font-weight:700; color:var(--text3);
+    padding:6px 12px; border-radius:8px;
+    border:1px dashed var(--text3);
+    white-space:nowrap; text-align:center;
   }
 
   /* BOTTOM STRIP */
@@ -236,7 +247,7 @@
         <div class="card-title">Teste estruturado</div>
         <div class="card-desc">Framework A/B com regras de decisão e learnings acumulados no Cérebro</div>
         <div class="card-result">
-          <div class="result-text"><strong>Cada real = aprendizado</strong>Não apenas venda</div>
+          <div class="result-text"><strong>Cada teste = aprendizado</strong>Reutilizável pra sempre</div>
         </div>
       </div>
     </div>
@@ -280,19 +291,17 @@
       </div>
     </div>
 
-    <!-- PROXIMO PASSO -->
-    <div class="next-step">
-      <div class="dot" style="left:-70px;">→</div>
-      <div class="card">
-        <div class="card-label" style="color:var(--text3);">Próximo</div>
-        <div class="card-title" style="color:var(--text3);">Automação total via API</div>
-        <div class="card-desc" style="color:var(--text3);">Upload + pausa via API do Meta — em espera por risco de banimento de conta</div>
-        <div class="card-result" style="border-color:var(--text3);">
-          <div class="result-text" style="color:var(--text3);"><strong style="color:var(--text3);">Risco > ganho</strong>Por enquanto, humano opera</div>
-        </div>
-      </div>
-    </div>
+  </div>
 
+  <!-- PROXIMO PASSO — fora da timeline -->
+  <div class="next-step-standalone">
+    <div class="nss-icon">→</div>
+    <div class="nss-content">
+      <div class="nss-label">Próximo passo</div>
+      <div class="nss-title">Automação total via API</div>
+      <div class="nss-desc">Upload + pausa via API do Meta — em espera por risco de banimento de conta</div>
+    </div>
+    <div class="nss-badge">Risco > ganho · Por enquanto, humano opera</div>
   </div>
 
   <div class="bottom">
